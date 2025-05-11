@@ -1,5 +1,6 @@
 package com.example.EmployeeManagement.Model;
 
+<<<<<<< HEAD
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -89,4 +90,35 @@ private List<String> taskIds= new ArrayList<>();
     public void setEmployeeRole(String employeeRole) {
         this.employeeRole = employeeRole;
     }
+=======
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import jakarta.persistence.Id;
+import java.util.List;
+
+@Entity
+@Table(name="employees")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int employeeId;
+    private String employeeName;
+    private String employeeEmail;
+    private String employeePhone;
+    private String employeeGender;
+    private String employeeSalary;
+    private String employeeRole;
+    private String employeeAddress;
+    private List<String> employeeTasks;
+
+
+>>>>>>> 82bbb83 (Model Changed)
 }

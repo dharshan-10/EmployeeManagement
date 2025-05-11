@@ -1,5 +1,6 @@
 package com.example.EmployeeManagement.Controller;
 
+<<<<<<< HEAD
 import com.example.EmployeeManagement.Model.Employee;
 import com.example.EmployeeManagement.Model.Task;
 import com.example.EmployeeManagement.Service.EmployeeService;
@@ -37,4 +38,27 @@ return employeeService.getEmployees();
         return taskService.updateCompletionStatus(taskId, status);
     }
 
+=======
+import com.example.EmployeeManagement.Model.Users;
+import com.example.EmployeeManagement.Service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class EmployeeController {
+    @Autowired
+    private UserService userService;
+    @PostMapping("/register")
+    public Users register(@RequestBody Users user){
+        return userService.register(user);}
+    @PostMapping("/login")
+    public String login(@RequestBody Users user){
+        return userService.verify(user);
+    }
+    @GetMapping("/")
+    public String greet(){
+        return "Hello";
+    }
+>>>>>>> 82bbb83 (Model Changed)
 }
