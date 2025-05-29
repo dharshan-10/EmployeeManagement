@@ -13,12 +13,11 @@ import java.util.List;
 @AllArgsConstructor
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int id;
     private String username;
     private String password;
-    @ElementCollection
-    private List<String> roles;
+    private String roles;
 
 
 }
