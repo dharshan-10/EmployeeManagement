@@ -27,9 +27,5 @@ public class EmployeeService {
         return userRepo.findByUsername(username).getRoles();
     }
 
-    public Employee addEmployee(Employee employee) {
-        System.out.println("Inside employeeService ");
-         employeeRepo.save(employee);
-         return employee;
-    }
+
 }

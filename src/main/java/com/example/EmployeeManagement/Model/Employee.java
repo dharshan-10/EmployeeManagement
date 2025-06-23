@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name="employees")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +25,16 @@ public class Employee {
     @ElementCollection
     @CollectionTable(name = "employee_tasks", joinColumns = @JoinColumn(name = "employee_id"))
     @Column(name = "task")
-    private List<String> employeeTasks;
+    private List<Integer> employeeTasks;
 
-
+    public Employee(String employeeName, String employeeEmail, String employeePhone, String employeeGender, String employeeSalary, String employeeRole, String employeeAddress, List<Integer> employeeTasks) {
+        this.employeeName = employeeName;
+        this.employeeEmail = employeeEmail;
+        this.employeePhone = employeePhone;
+        this.employeeGender = employeeGender;
+        this.employeeSalary = employeeSalary;
+        this.employeeRole = employeeRole;
+        this.employeeAddress = employeeAddress;
+        this.employeeTasks = employeeTasks;
+    }
 }

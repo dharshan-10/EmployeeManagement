@@ -10,7 +10,6 @@ import java.util.List;
 @Table(name="users")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,5 +18,9 @@ public class Users {
     private String password;
     private String roles;
 
-
+    public Users(String username, String password, String roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
 }
