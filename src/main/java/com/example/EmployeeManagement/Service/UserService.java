@@ -17,7 +17,8 @@ public class UserService {
     private JwtService jwtService;
     @Autowired
     private AuthenticationManager authenticationManager;
-    private BCryptPasswordEncoder encoder= new BCryptPasswordEncoder(10);
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
+
     public Users register(Users user) {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepo.save(user);
@@ -25,7 +26,7 @@ public class UserService {
     }
 
     public String verify(Users user) {
-        Authentication authentication= authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated())
             return jwtService.generateToken(user.getUsername());
         return "fail";

@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 
 
 import java.time.LocalDate;
+
 @Entity
-@Table(name="tasks")
+@Table(name = "tasks")
 @Data
 @NoArgsConstructor
 public class Task {
@@ -44,7 +45,7 @@ public class Task {
     private byte[] taskProof;
     private String taskRemarks;
     private String taskFeedback;
-    private boolean taskReviewedByAdmin=false;
-    private boolean taskCompletionStatus=false;
-    private int taskProgress=0;
+    private boolean taskReviewedByAdmin = false;
+    private boolean taskCompletionStatus = false;
+    private int taskProgress = 0;
 }

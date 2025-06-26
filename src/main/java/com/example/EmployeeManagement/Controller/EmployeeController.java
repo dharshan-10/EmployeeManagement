@@ -1,33 +1,23 @@
 package com.example.EmployeeManagement.Controller;
 
-import com.example.EmployeeManagement.Model.Employee;
 import com.example.EmployeeManagement.Model.Task;
-import com.example.EmployeeManagement.Service.AdminService;
+import com.example.EmployeeManagement.Model.Users;
 import com.example.EmployeeManagement.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController()
+@RestController("/employee")
 public class EmployeeController {
     @Autowired
-    private AdminService adminService;
-    @PostMapping("/addEmployee")
-    public ResponseEntity<String > addEmployee(@RequestBody Employee employee){
-        return adminService.addEmployee(employee);
-    }
-    @GetMapping("/getEmployees")
-    public List<Employee> getEmployees(){
-        return adminService.getAllEmployees();
-    }
-    @PostMapping("/addTask")
-    public ResponseEntity<String> addTask(@RequestParam Integer EmployeeId, @RequestBody Task task){
-        return adminService.addTask(EmployeeId,task);
-    }
-    @GetMapping("/getTasks")
-    public List<Task> getTasks(@RequestParam Integer EmployeeId){
-        return adminService.getTasks(EmployeeId);
+    private EmployeeService employeeService;
+
+    @GetMapping("/getOwnTasks")
+    public List<Task> getOwnTasks(@AuthenticationPrincipal Users users) {
+        return employeeService.getOwnTasks();
     }
 }

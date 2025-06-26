@@ -8,12 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Id;
+
 import java.util.List;
 
 @Data
 @Entity
 
-@Table(name="admin")
+@Table(name = "admin")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Admin {
