@@ -24,7 +24,7 @@ public class Employee {
     private String employeeAddress;
     @ElementCollection
     @CollectionTable(name = "employee_tasks", joinColumns = @JoinColumn(name = "employee_id"))
-    @Column(name = "task")
+    @Column(name = "task_id")
     private List<Integer> employeeTasks;
 
     public Employee(String employeeName, String employeeEmail, String employeePhone, String employeeGender, String employeeSalary, String employeeRole, String employeeAddress, List<Integer> employeeTasks) {

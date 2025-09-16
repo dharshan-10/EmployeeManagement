@@ -2,18 +2,18 @@ package com.example.EmployeeManagement.Service;
 
 import com.example.EmployeeManagement.Model.Employee;
 import com.example.EmployeeManagement.Model.Task;
+import com.example.EmployeeManagement.Model.TaskReviewStatus;
 import com.example.EmployeeManagement.Model.Users;
 import com.example.EmployeeManagement.Repository.EmployeeRepo;
 import com.example.EmployeeManagement.Repository.TaskRepo;
 import com.example.EmployeeManagement.Repository.UserRepo;
+import jakarta.websocket.OnClose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AdminService {
@@ -24,21 +24,26 @@ public class AdminService {
     @Autowired
     private UserService userService;
 
-    public ResponseEntity<String> addEmployee(Employee employee) {
+    public ResponseEntity<Map<String, Object>> addEmployee(Employee employee) {
 
+        Map<String, Object> response = new HashMap<>();
         String username = employeeService.getCurrentUsername();
         String role = employeeService.getUserRole(username);
         if ("admin".equals(role)) {
-            Users newUser = new Users(employee.getEmployeeEmail(), employee.getEmployeeName(), employee.getEmployeeRole());
+            Users newUser = new Users(employee.getEmployeeName(), employee.getEmployeeName(), employee.getEmployeeRole());
             userService.register(newUser);
             Employee e = new Employee(employee.getEmployeeName(), employee.getEmployeeEmail(), employee.getEmployeePhone(),
                     employee.getEmployeeGender(), employee.getEmployeeSalary(), employee.getEmployeeRole(),
                     employee.getEmployeeAddress(), employee.getEmployeeTasks());
             employeeRepo.save(e);
-            return new ResponseEntity<>("Employee added successfully.", HttpStatus.CREATED);
+            response.put("success", true);
+            response.put("message", "Added the Employee Successfully");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Unauthorized: Only admin can add employees.", HttpStatus.FORBIDDEN);
-        }
+            response.put("success", false);
+            response.put("message", "Unauthorized: Only admin can add employees.");
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+              }
 
     }
 
@@ -47,8 +52,7 @@ public class AdminService {
     public ResponseEntity<String> addTask(Integer employeeId, Task task) {
         String username = employeeService.getCurrentUsername();
         String role = employeeService.getUserRole(username);
-        System.out.println("The role is" + role);
-        if ("admin".equals(role)) {
+        if ("admin".equalsIgnoreCase(role.trim())) {
             Task newTask = taskRepo.save(task);
 
             Optional<Employee> optionalEmployee = employeeRepo.findById(employeeId);
@@ -71,10 +75,21 @@ public class AdminService {
         String username = employeeService.getCurrentUsername();
         String role = employeeService.getUserRole(username);
         if ("admin".equals(role)) {
-            return employeeRepo.findAll();
+            List<Employee> optionalEmployee= employeeRepo.findAll();
+            List<Employee> employees=new ArrayList<>();
+            for(Employee employee:optionalEmployee){
+                if (!employee.getEmployeeRole().equals("admin")){
+                    employees.add(employee);
+                }
+            }
+            return employees;
         }
         return new ArrayList<>();
     }
 
-
+@Autowired
+private TaskService taskService;
+    public ResponseEntity<String> updateTaskReviewStatus(TaskReviewStatus taskReviewStatus) {
+        return taskService.updateTaskReviewStatus(taskReviewStatus);
+    }
 }

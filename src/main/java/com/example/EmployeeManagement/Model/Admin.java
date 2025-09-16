@@ -1,13 +1,9 @@
 package com.example.EmployeeManagement.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Id;
 
 import java.util.List;
 
@@ -28,5 +24,8 @@ public class Admin {
     private String adminSalary;
     private String adminRole;
     private String adminAddress;
+    @ElementCollection
+    @CollectionTable(name = "admin_tasks", joinColumns = @JoinColumn(name = "admin_id"))
+    @Column(name = "task")
     private List<String> assignedTasks;
 }

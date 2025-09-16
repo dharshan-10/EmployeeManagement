@@ -37,10 +37,12 @@ public class EmployeeService {
         List<Task> tasks = new ArrayList<>();
         Optional<Employee> optionalEmployee = employeeRepo.findById(employeeId);
         if (optionalEmployee.isPresent()) {
-            for (int taskId : optionalEmployee.get().getEmployeeTasks()) {
-                Optional<Task> optionalTask = taskRepo.findById(taskId);
-                optionalTask.ifPresent(tasks::add);
-            }
+            optionalEmployee.get().getEmployeeTasks()
+                    .stream()
+                    .distinct()   // avoid duplicate task IDs
+                    .forEach(taskId -> {
+                        taskRepo.findById(taskId).ifPresent(tasks::add);
+                    });
         }
         return tasks;
     }
@@ -50,13 +52,13 @@ public class EmployeeService {
     }
 
 
-    public List<Task> getOwnTasks() {
-        String username = getCurrentUsername();
-        if (username != null) {
-            int employeeId = employeeRepo.findEmployeeIdByEmployeeName(username);
-            return getTasks(employeeId);
-        }
-        return new ArrayList<>();
+    public List<Task> getOwnTasks(int EmployeeId) {
+        return getTasks(EmployeeId);
 
     }
+
+    public int getEmployeeIdByUserName(String username) {
+        return  employeeRepo.findEmployeeIdByEmployeeName(username);
+    }
+
 }

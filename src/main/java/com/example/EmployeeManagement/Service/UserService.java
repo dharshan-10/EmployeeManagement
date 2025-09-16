@@ -20,6 +20,7 @@ public class UserService {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
 
     public Users register(Users user) {
+        System.out.println(user.getPassword());
         user.setPassword(encoder.encode(user.getPassword()));
         userRepo.save(user);
         return user;

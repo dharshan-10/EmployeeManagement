@@ -17,16 +17,16 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int taskId;
 
-    public Task(String taskName, String taskDescription, String taskAssignedTo, LocalDate taskAssignedDate,
+    public Task(String taskName, String taskDescription, String taskAssignedTo,String taskAssignedBy, LocalDate taskAssignedDate,
                 LocalDate taskDueDate, byte[] taskProof, String taskRemarks, String taskFeedback) {
 
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskAssignedTo = taskAssignedTo;
-
+        this.taskAssignedBy=taskAssignedBy;
         this.taskAssignedDate = taskAssignedDate;
         this.taskDueDate = taskDueDate;
-        this.taskProof = taskProof;
+        this.taskProof = (taskProof != null && taskProof.length > 0) ? taskProof : null;
         this.taskRemarks = taskRemarks;
         this.taskFeedback = taskFeedback;
         this.taskReviewedByAdmin = false;
@@ -37,6 +37,7 @@ public class Task {
     private String taskName;
     private String taskDescription;
     private String taskAssignedTo;
+    private  String taskAssignedBy;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate taskAssignedDate;
     @JsonFormat(pattern = "yyyy-MM-dd")
